@@ -1,22 +1,42 @@
-% 中文与排版
-\usepackage{geometry}
-\geometry{a4paper, left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm} % 页边距设置
-\usepackage{pdfpages}
-
-% 数学与符号
-\usepackage{amsmath, amssymb, mathtools} % 数学公式与符号支持
-\everymath{\displaystyle}
-\usepackage{multicol}
+\usepackage[paper=a4paper, margin=2.5cm]{geometry} % 调整页边距
+\usepackage{amsmath}
+\usepackage{array}
 \usepackage{enumitem}
-%引用上标显示
-\usepackage{subcaption}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{float}
+\usepackage{setspace}
+\usepackage{titlepic}
+\usepackage{diagbox}
+\usepackage{listings}
+\usepackage{xcolor}      %代码着色宏包
+\usepackage{CJK}         %显示中文宏包
+\usepackage{booktabs}    %用于更美观的表格线
+\usepackage{multirow}
+\usepackage{tabularx}    %自动调整列宽
+\lstset{
+    basicstyle=\ttfamily\footnotesize, % 缩小字号
+    columns=fullflexible,              % 紧凑字符间距
+    keywordstyle=\color{blue},         % 关键词高亮
+    commentstyle=\color{gray},         % 注释颜色
+    numbers=left,                      % 显示行号
+    numberstyle=\tiny\color{gray},     % 行号字号
+    frame=single,                      % 边框
+    framesep=2pt,                      % 边框间距
+    xleftmargin=10pt,                  % 左边距
+    breaklines=true,                   % 自动换行
+    showstringspaces=false,            % Do not mark spaces inside strings.
+    language=C++,                      % c++
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space}, % 换行标记
+}
+\titlepic{\includegraphics[width=0.55\linewidth]{figures/logo.png}}
 
-\let\oldcite\cite
-\renewcommand{\cite}[1]{\textsuperscript{\oldcite{#1}}}
+% Keep the table of contents visually unchanged while making entries clickable.
+\usepackage[unicode,hidelinks,linktoc=all]{hyperref}
 
-\usepackage{exam-zh-choices}
-\usepackage{xcolor}                                 % 引入定制颜色的xcolor
-\definecolor{LightBlue}{RGB}{250, 255, 255}        % 自定义颜色LightBlue
+% 引入定制颜色的xcolor
+\definecolor{LightBlue}{RGB}{252, 255, 255}        % 自定义颜色LightBlue
 \usepackage{tcolorbox}                              % 引入tcolorbox宏包
 \tcbuselibrary{breakable, most, skins, theorems} 
 \newtcolorbox{question}[2][breakable] {             % 定义解答和问题的样式
@@ -25,71 +45,35 @@
 	fonttitle = \bfseries,  
 	title = #2, #1
 }
-\newenvironment{solution}{\noindent{\textbf{{\color{cyan}One Possible Version}}}\quad}
+\newenvironment{solution}{\noindent{\textbf{{\color{cyan}解答}}}\quad}
 
 
 
-
-
-% 图形与绘图
-\usepackage{graphicx}
-\usepackage{tikz}
-\usetikzlibrary{arrows.meta}
-
-% 列表与枚举
-\usepackage{enumitem}
-\setlist[enumerate,1]{label=\arabic*.}
-
-% 表格
-\usepackage{booktabs}
-\usepackage{multirow}
-\usepackage{array}
-
-% 附录与浮动体
-\usepackage{appendix}
-\usepackage{float}
-
-% 颜色与高亮
-\usepackage{xcolor}
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-\definecolor{orange}{RGB}{255,127,0}
-
-% 代码环境
-\usepackage{listings}
-\lstset{
-	frame=tb,
-	aboveskip=2mm,
-	belowskip=2mm,
-	showstringspaces=false,
-	columns=flexible,
-	framerule=1pt,
-	rulecolor=\color{gray!35},
-	backgroundcolor=\color{gray!5},
-	basicstyle={\footnotesize\ttfamily\baselineskip=0.9\baselineskip},
-	keywordstyle=\color{blue},
-	commentstyle=\color{dkgreen},
-	stringstyle=\color{mauve},
-	breaklines=true,
-	breakatwhitespace=true,
-	tabsize=4,
-	numbers=left,
-	numberstyle=\scriptsize,
-	stepnumber=1,
-	lineskip=-1pt,
-}
-
-
-% 标题与超链接
-\usepackage[breaklinks,colorlinks,bookmarksnumbered,linkcolor=black,urlcolor=blue]{hyperref}
-
-% 段落与行距
-\usepackage{indentfirst}
-\setlength{\parindent}{2em}
-\usepackage{setspace}
-\renewcommand{\baselinestretch}{1.5}
-
-% 目录深度设置
-\setcounter{tocdepth}{4}
-\setcounter{secnumdepth}{4}
+\makeatletter
+\let\oldtitle\title
+\let\oldauthor\author
+\let\olddate\date 
+\renewcommand{\title}[1]{\oldtitle{{\heiti\zihao{2}\bfseries #1}}}
+\renewcommand{\author}[1]{\oldauthor{{\heiti\zihao{4}\bfseries #1}}}
+\renewcommand{\date}[1]{\olddate{{\heiti\zihao{4}\bfseries #1}}}
+\renewcommand{\@maketitle}{%
+    \newpage
+    \null
+    \vskip 2em%
+    \begin{center}%
+        \let \footnote \thanks
+        {\centering\@titlepic\par}%
+        \vskip .5em%
+        {\LARGE \@title \par}%
+        \vskip 1.5em%
+        {\large
+        \lineskip .5em%
+        \begin{tabular}[t]{c}%
+            \@author
+        \end{tabular}\par}%
+        \vskip 1em%
+        {\large \@date}%
+    \end{center}%
+    \par
+    \vskip 1.5em}
+\makeatother
